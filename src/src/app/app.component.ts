@@ -9,6 +9,7 @@ import { TimersService } from './timers.service';
   template: `
 
     <div class="container">
+    <a href="https://github.com/taylorhutchison/sequence-timer/tree/main/src">Made with Angular</a>
     <h1>Sequence Timers</h1>
     <div class="mainControls">
         
