@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { Timer } from './types';
 import { HhmmssPipe } from './hhmmss.pipe';
 
@@ -9,7 +9,7 @@ import { HhmmssPipe } from './hhmmss.pipe';
     <div class="timeContainer">
       <div class="controls">
         <button (click)=remove.emit()>❌</button>
-        <button (click)=pause.emit()>⏸</button>
+        <button (click)=pause.emit()>{{playPause()}}</button>
       </div>
       <span class="time">{{ timer().remaining_ms | hhmmss }}</span>
       <input type="text" (input)="updateLabel($event)" [class.nonDefaultLabel]="nonDefaultLabel" placeholder="name">
@@ -50,6 +50,8 @@ export class TimerComponent {
   timer = input.required<Timer>();
   remove = output();
   pause = output();
+
+  playPause = computed(() => this.timer().paused ? '▶️' : '⏸');
 
   nonDefaultLabel = false;
 
