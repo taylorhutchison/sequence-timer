@@ -1,14 +1,131 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
-app-timer {
-    display: block;
-}
-
 body {
     font-family: "Noto Sans", sans-serif;
     font-weight: 100;
 }
 
+a {
+    text-decoration: none;
+    color: #323232;
+}
+
 button {
     cursor: pointer;
 }
+
+input {
+    width: 120px;
+    font-size: 1.1rem;
+    border: none;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 300;
+    background: none;
+}
+
+app-timer {
+    display: block;
+}
+
+.container {
+    width: 500px;
+    margin: 50px auto;
+    padding: 5px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    box-shadow: 12px 12px 2px 1px rgba(74, 74, 86, 0.2);
+    background: #fafafa;
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+        margin:10px auto;
+    }
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: 300;
+}
+
+.mainControls {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.mainControls button {
+    flex: 2;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+    background: #fff;
+    margin-right: 1px;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    color: #343434;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 300;
+}
+
+.mainControls .actions {
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainControls button.reset {
+    background: rgba(224, 0, 0, 0.7);
+    color: #fff;
+}
+
+.mainControls button.startStop {
+    background: rgba(0, 45, 209, 0.7);
+    color: #fff;
+}
+
+.timeContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.timeContainer .time {
+    font-size: 3em;
+    display: inline;
+    margin: 0 7px;
+}
+
+.timeContainer button {
+    border: none;
+    background: none;
+    font-size: 0.9rem;
+}
+
+.timeContainer .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cancelControl {
+    color: rgba(224, 0, 0, 0.7);
+}
+
+.playPauseControl {
+    color: rgba(0, 45, 209, 0.7);
+}
+
+.expired {
+    color: rgb(224, 0, 0);
+}
+
+.active {
+    color: rgb(0, 73, 28);
+}
+
+.paused {
+    background: #f00;
+}
+
