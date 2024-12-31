@@ -13,14 +13,15 @@ import { TimersService } from './timers.service';
     <h1>Sequence Timers</h1>
     <div class="mainControls">
         
-        <button (click)="addTimer(0.5)">+30sec</button>
-        <button (click)="addTimer(1)">+1</button>
-        <button (click)="addTimer(5)">+5</button>
-        <button (click)="addTimer(10)">+10</button>
-        <button (click)="addTimer(30)">+30</button>
-        <button (click)="addTimer(60)">+60</button>
+        <button (click)="addTimer(0.5)" style="background: rgb(255 202 0 / 10%);">+30sec</button>
+        <button (click)="addTimer(1)" style="background: rgb(255 202 0 / 20%);">+1</button>
+        <button (click)="addTimer(5)" style="background: rgb(255 202 0 / 30%);">+5</button>
+        <button (click)="addTimer(10)" style="background: rgb(255 202 0 / 40%);">+10</button>
+        <button (click)="addTimer(30)" style="background: rgb(255 202 0 / 50%);">+30</button>
+        <button (click)="addTimer(60)" style="background: rgb(255 202 0 / 60%);">+60</button>
         <div class="actions">
-          <button (click)="service.toggleTimers()">{{startStop()}}</button>
+          <button (click)="service.resetTimers()" class="reset">Reset</button>
+          <button (click)="service.toggleTimers()" class="startStop">{{startStop()}}</button>
         </div>
     </div>
 
@@ -40,13 +41,15 @@ import { TimersService } from './timers.service';
       padding:5px;
       border: 1px solid #000;
       border-radius: 4px;
-      box-shadow: 12px 12px 2px 1px rgb(74 74 86 / 20%);
+      box-shadow: 12px 12px 2px 1px rgba(74, 74, 86, 0.2);
+      background: #fafafa;
     }
 
     .container h1 {
       text-align: center;
       font-size: 2rem;
       margin-bottom: 10px;
+      font-weight: 300;
     }
 
     .mainControls {
@@ -69,19 +72,27 @@ import { TimersService } from './timers.service';
     }
 
     .mainControls .actions {
-      flex: 1;
+      flex: 6;
       display: flex;
       flex-direction: column;
     }
-
-    .startStop{
-      font-size: 2em;
-      border: none;
-      background: none;
-    }
-
     .paused {
       background: #f00;
+    }
+
+    a {
+      text-decoration: none;
+      color:#323232;
+    }
+
+    .mainControls button.reset {
+      background:rgba(224, 0, 0, 0.7);
+      color: #fff;
+    }
+
+    .mainControls button.startStop {
+      background: rgba(0, 45, 209, 0.7);
+      color: #fff;
     }
 
   `,
@@ -104,10 +115,6 @@ export class AppComponent {
 
   pauseTimer(timer: Timer) {
     this.service.pauseTimer(timer);
-  }
-
-  constructor() {
-    this.service.start();
   }
 
 }

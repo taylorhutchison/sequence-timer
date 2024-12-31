@@ -10,7 +10,7 @@ export class TimersService {
 
   private intervalClock: any;
 
-  timerState = signal('on' as 'on' | 'off');
+  timerState = signal('off' as 'on' | 'off');
 
   timers = signal([] as Timer[]);
 
