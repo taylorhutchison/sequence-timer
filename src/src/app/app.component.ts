@@ -13,7 +13,7 @@ import { TimersService } from './timers.service';
     <h1>Sequence Timers</h1>
     <div class="mainControls">
         
-        <button (click)="addTimer(0.1)">+30sec</button>
+        <button (click)="addTimer(0.5)">+30sec</button>
         <button (click)="addTimer(1)">+1</button>
         <button (click)="addTimer(5)">+5</button>
         <button (click)="addTimer(10)">+10</button>
