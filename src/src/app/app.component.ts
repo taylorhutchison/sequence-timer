@@ -8,42 +8,81 @@ import { TimersService } from './timers.service';
   imports: [TimerComponent],
   template: `
 
+    <div class="container">
+    <h1>Sequence Timers</h1>
     <div class="mainControls">
-      <button class="startStop" (click)="service.toggleTimer()">{{startStop()}}</button>
+        
+        <button (click)="addTimer(0.1)">+30sec</button>
+        <button (click)="addTimer(1)">+1</button>
+        <button (click)="addTimer(5)">+5</button>
+        <button (click)="addTimer(10)">+10</button>
+        <button (click)="addTimer(30)">+30</button>
+        <button (click)="addTimer(60)">+60</button>
+        <div class="actions">
+          <button (click)="service.toggleTimers()">{{startStop()}}</button>
+        </div>
     </div>
 
     @for (timer of timers(); track $index) {
-      <app-timer [timer]="timer" (remove)="removeTimer(timer)"></app-timer>
+      <app-timer [timer]="timer" (remove)="removeTimer(timer)" (pause)="pauseTimer(timer)"></app-timer>
     }
 
-    <div class="addTimerButtons">
-      <button (click)="addTimer(0.5)">+30sec</button>
-      <button (click)="addTimer(1)">+1</button>
-      <button (click)="addTimer(5)">+5</button>
-      <button (click)="addTimer(10)">+10</button>
-      <button (click)="addTimer(30)">+30</button>
-      <button (click)="addTimer(60)">+60</button>
-    </div>
+  </div>
+
+
   `,
   styles: `
 
-    .mainControls button{
+    .container {
+      width:500px;
+      margin: 50px auto;
+      padding:5px;
+      border: 1px solid #000;
+      border-radius: 4px;
+      box-shadow: 12px 12px 2px 1px rgb(74 74 86 / 20%);
+    }
+
+    .container h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .mainControls {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .mainControls button {
+      flex: 2;
+      box-sizing: border-box;
+      font-size: 1.5rem;
+      background: #fff;
+      margin-right:1px;
+      border-radius: 4px;
+      border: 1px solid #bbb;
+      color: #343434;
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 300;
+    }
+
+    .mainControls .actions {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .startStop{
       font-size: 2em;
       border: none;
       background: none;
     }
 
-
-
-    .addTimerButtons {
-      display: flex;
-      flex-wrap: wrap;
-      width:100px;
+    .paused {
+      background: #f00;
     }
-    .addTimerButtons button {
-      flex: 1;
-      box-sizing: border-box;
-    }
+
   `,
 })
 export class AppComponent {
@@ -52,7 +91,7 @@ export class AppComponent {
 
   timers = this.service.timers;
 
-  startStop = computed(() => this.service.timerState() ? '⏸️' : '▶️');
+  startStop = computed(() => this.service.timerState() == 'on' ? 'Pause' : 'Start');
 
   addTimer(minutes: number) {
     this.service.addTimer(minutes);
@@ -60,6 +99,10 @@ export class AppComponent {
 
   removeTimer(timer: Timer) {
     this.service.removeTimer(timer);
+  }
+
+  pauseTimer(timer: Timer) {
+    this.service.pauseTimer(timer);
   }
 
   constructor() {

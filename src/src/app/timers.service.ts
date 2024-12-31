@@ -6,15 +6,19 @@ import { Timer } from './types';
 })
 export class TimersService {
 
+  private interval = 1000;
+
   private intervalClock: any;
 
-  timerState = signal(0);
+  timerState = signal('on' as 'on' | 'off');
 
   timers = signal([] as Timer[]);
 
   addTimer(minutes: number) {
+    const lastTimer = this.timers()?.at(-1);
+
     this.timers.update(timers => [...timers, {
-      remaining_ms: minutes * 60 * 1000,
+      remaining_ms: (lastTimer?.remaining_ms ?? 0) + (minutes * 60 * 1000),
     }]);
   }
 
@@ -22,22 +26,43 @@ export class TimersService {
     this.timers.update(timers => timers.filter(t => t !== timer));
   }
 
+  pauseTimer(timer: Timer) {
+    this.timers.update(timers => timers.map(t => {
+      if (t === timer) {
+        return {
+          paused: !t.paused,
+          remaining_ms: t.remaining_ms,
+        };
+      }
+      return t;
+    }));
+
+    console.log(this.timers());
+  }
+
+  resetTimers() {
+    this.timers.set([]);
+  }
+
   start() {
     this.intervalClock = setInterval(() => {
-      this.timers.update(timers => timers.map(timer => ({
-        remaining_ms: timer.remaining_ms - 1000,
-      })));
-    }, 1000);
-    this.timerState.set(1);
+      this.timers.update(timers => timers.map(timer => {
+        return {
+          ...timer,
+          remaining_ms: timer.remaining_ms - (timer.paused ? 0 : this.interval),
+        }
+      }));
+    }, this.interval);
+    this.timerState.set('on');
   }
 
   stop() {
     clearInterval(this.intervalClock);
-    this.timerState.set(0);
+    this.timerState.set('off');
   }
 
-  toggleTimer() {
-    this.timerState() ? this.stop() : this.start();
+  toggleTimers() {
+    this.timerState() == 'on' ? this.stop() : this.start();
   }
 
 }
